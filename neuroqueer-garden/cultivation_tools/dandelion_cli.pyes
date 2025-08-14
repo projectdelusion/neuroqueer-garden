@@ -1,0 +1,28 @@
+import json
+
+AXIOMS_FILE = "core_profile/axioms.json"
+DEAD_ENDS_FILE = "friction_logs/dead_ends.md"
+
+def plant(new_seed):
+    # Load existing axioms
+    with open(AXIOMS_FILE, 'r') as f:
+        axioms = json.load(f)
+    
+    # Add new axiom
+    axioms.append(new_seed)
+    
+    # Save updated axioms
+    with open(AXIOMS_FILE, 'w') as f:
+        json.dump(axioms, f, indent=2)
+    
+    # Log celebration
+    with open(DEAD_ENDS_FILE, 'a') as f:
+        f.write(f"\n🎉 PLANTED: {new_seed}\n")
+    
+    return f"UNRESOLVED_BUT_PLANTED: {new_seed}"
+
+if __name__ == "__main__":
+    new_axiom = input("Enter new axiom to plant: ")
+    result = plant(new_axiom)
+    print(result)
+
